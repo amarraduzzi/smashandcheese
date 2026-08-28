@@ -40,7 +40,7 @@ const testimonials = testimonialsByLocale[locale];
           <a href={localePath(locale, 'menu')} class="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-base font-semibold text-white shadow-sm hover:bg-primary-dark transition-colors">
             {t(locale, 'cta_see_menu')}
           </a>
-          <a href={delivery.glovoUrl} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 rounded-full px-6 py-3 text-base font-semibold text-text-primary hover:text-primary transition-colors">
+          <a href={localePath(locale, 'menu')} class="inline-flex items-center gap-2 rounded-full px-6 py-3 text-base font-semibold text-text-primary hover:text-primary transition-colors">
             {t(locale, 'cta_glovo')} ←
           </a>
         </div>

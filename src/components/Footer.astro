@@ -37,7 +37,7 @@ const yearsHours = hours[locale] ?? hours.fr;
         {contact.phoneDisplay}
       </a>
       <br />
-      <a href={delivery.glovoUrl} target="_blank" rel="noopener noreferrer" class="mt-1 inline-block text-sm text-white/70 hover:text-white">
+      <a href={localePath(locale, 'menu')} class="mt-1 inline-block text-sm text-white/70 hover:text-white">
         {t(locale, 'cta_glovo')}
       </a>
     </div>

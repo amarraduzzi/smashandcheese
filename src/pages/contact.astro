@@ -61,9 +61,7 @@ const locale = 'fr' as const;
             {t(locale, 'cta_see_menu')}
           </a>
           <a
-            href={delivery.glovoUrl}
-            target="_blank"
-            rel="noopener noreferrer"
+            href={localePath(locale, 'menu')}
             class="inline-flex items-center gap-2 rounded-full border border-border px-6 py-3 text-sm font-semibold hover:border-primary hover:text-primary transition-colors"
           >
             {t(locale, 'cta_glovo')}
