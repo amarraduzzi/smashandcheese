@@ -1,7 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import { localePath, t } from '../../lib/i18n';
-import { getWhatsAppOrderLink } from '../../lib/whatsapp';
 
 const locale = 'ar' as const;
 ---
@@ -50,10 +49,7 @@ const locale = 'ar' as const;
     </div>
 
     <div class="mt-14 text-center">
-      <a href={getWhatsAppOrderLink(locale)} class="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-white hover:bg-primary-dark transition-colors">
-        {t(locale, 'cta_order_whatsapp')}
-      </a>
-      <a href={localePath(locale, 'menu')} class="mr-4 inline-flex items-center gap-2 rounded-full border border-border px-6 py-3 text-sm font-semibold hover:border-primary hover:text-primary transition-colors">
+      <a href={localePath(locale, 'menu')} class="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-white hover:bg-primary-dark transition-colors">
         {t(locale, 'cta_see_menu')}
       </a>
     </div>

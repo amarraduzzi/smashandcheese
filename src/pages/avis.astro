@@ -5,14 +5,21 @@ import { t } from '../lib/i18n';
 
 const locale = 'fr' as const;
 
-// Only emit AggregateRating/Review structured data once real reviews exist —
-// no fabricated ratings, ever.
-const reviewJsonLd =
-  testimonials.length > 0
+// Real data only: aggregateRating uses the client's actual Google rating +
+// review count (verified live on their listing), and each Review below is
+// copied verbatim from Google — nothing here is invented.
+const reviewJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Restaurant',
+  name: "Smash'N Cheese",
+  aggregateRating: {
+    '@type': 'AggregateRating',
+    ratingValue: googleRating.value,
+    bestRating: googleRating.bestRating,
+    reviewCount: googleRating.reviewCount,
+  },
+  ...(testimonials.length > 0
     ? {
-        '@context': 'https://schema.org',
-        '@type': 'Restaurant',
-        name: "Smash'N Cheese",
         review: testimonials.map((rev) => ({
           '@type': 'Review',
           author: { '@type': 'Person', name: rev.author },
@@ -20,7 +27,8 @@ const reviewJsonLd =
           reviewBody: rev.text.fr,
         })),
       }
-    : null;
+    : {}),
+};
 ---
 
 <Layout
@@ -29,7 +37,7 @@ const reviewJsonLd =
   title="Avis clients — Smash'N Cheese | Rabat"
   description="Ce que nos clients disent de Smash'N Cheese à Agdal, Rabat."
 >
-  {reviewJsonLd && <script type="application/ld+json" set:html={JSON.stringify(reviewJsonLd)} />}
+  <script type="application/ld+json" set:html={JSON.stringify(reviewJsonLd)} />
 
   <section class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-16">
     <h1 class="font-display text-4xl sm:text-5xl font-bold text-center">Avis clients</h1>
@@ -43,7 +51,7 @@ const reviewJsonLd =
           </svg>
         ))}
       </div>
-      <p class="mt-3 text-text-muted">Note moyenne sur Google</p>
+      <p class="mt-3 text-text-muted">Note moyenne sur Google · {googleRating.reviewCount} avis</p>
       <a
         href={googleReviewsUrl}
         target="_blank"
@@ -61,8 +69,12 @@ const reviewJsonLd =
             <div class="flex items-center gap-1 text-accent" aria-hidden="true">
               {Array.from({ length: rev.rating }).map(() => <span>★</span>)}
             </div>
-            <p class="mt-3 text-text-muted">{rev.text.fr}</p>
-            <p class="mt-4 text-sm font-semibold">{rev.author}</p>
+            <p class="mt-3 text-text-muted">« {rev.text.fr} »</p>
+            <div class="mt-4 flex items-center justify-between gap-2">
+              <p class="text-sm font-semibold">{rev.author}</p>
+              {rev.date && <p class="text-xs text-text-muted">{rev.date}</p>}
+            </div>
+            <p class="mt-1 text-xs text-text-muted">via {rev.source ?? 'Google'}</p>
           </div>
         ))}
       </div>

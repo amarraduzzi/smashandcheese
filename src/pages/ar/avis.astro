@@ -4,6 +4,28 @@ import { testimonials, googleReviewsUrl, googleRating } from '../../content/test
 import { t } from '../../lib/i18n';
 
 const locale = 'ar' as const;
+
+const reviewJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Restaurant',
+  name: "Smash'N Cheese",
+  aggregateRating: {
+    '@type': 'AggregateRating',
+    ratingValue: googleRating.value,
+    bestRating: googleRating.bestRating,
+    reviewCount: googleRating.reviewCount,
+  },
+  ...(testimonials.length > 0
+    ? {
+        review: testimonials.map((rev) => ({
+          '@type': 'Review',
+          author: { '@type': 'Person', name: rev.author },
+          reviewRating: { '@type': 'Rating', ratingValue: rev.rating, bestRating: 5 },
+          reviewBody: rev.text.ar,
+        })),
+      }
+    : {}),
+};
 ---
 
 <Layout
@@ -12,6 +34,8 @@ const locale = 'ar' as const;
   title="تقييمات العملاء — Smash'N Cheese | الرباط"
   description="ماذا يقول عملاؤنا عن Smash'N Cheese في أكدال، الرباط."
 >
+  <script type="application/ld+json" set:html={JSON.stringify(reviewJsonLd)} />
+
   <section class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-16">
     <h1 class="font-display text-4xl sm:text-5xl font-bold text-center">تقييمات العملاء</h1>
 
@@ -24,7 +48,7 @@ const locale = 'ar' as const;
           </svg>
         ))}
       </div>
-      <p class="mt-3 text-text-muted">متوسط التقييم على جوجل</p>
+      <p class="mt-3 text-text-muted">متوسط التقييم على جوجل · {googleRating.reviewCount} تقييم</p>
       <a href={googleReviewsUrl} target="_blank" rel="noopener noreferrer" class="mt-6 inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-white hover:bg-primary-dark transition-colors">
         {t(locale, 'cta_see_all_reviews')}
       </a>
@@ -37,8 +61,12 @@ const locale = 'ar' as const;
             <div class="flex items-center gap-1 text-accent" aria-hidden="true">
               {Array.from({ length: rev.rating }).map(() => <span>★</span>)}
             </div>
-            <p class="mt-3 text-text-muted">{rev.text.ar}</p>
-            <p class="mt-4 text-sm font-semibold">{rev.author}</p>
+            <p class="mt-3 text-text-muted">"{rev.text.ar}"</p>
+            <div class="mt-4 flex items-center justify-between gap-2">
+              <p class="text-sm font-semibold">{rev.author}</p>
+              {rev.date && <p class="text-xs text-text-muted">{rev.date}</p>}
+            </div>
+            <p class="mt-1 text-xs text-text-muted">via {rev.source ?? 'Google'}</p>
           </div>
         ))}
       </div>

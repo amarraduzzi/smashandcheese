@@ -1,32 +1,63 @@
 // Reviews page content.
 //
-// IMPORTANT: no real customer reviews were found on the live site or
-// provided by the client. This file intentionally ships EMPTY rather than
-// with invented names/quotes — fabricated testimonials are not something
-// this template will generate, even as placeholder copy, because they'd
-// read as genuine to a visitor.
+// The 3 entries below are REAL, verbatim Google reviews for this business —
+// pulled directly from the client's Google Business Profile (Google Maps
+// listing for "Smash'N Cheese", Rabat) on 2026-08-28. Text is reproduced
+// exactly as posted, unedited and untranslated (Google's own machine
+// translation is skipped — see the `source` note on the one entry Google
+// had auto-translated, which is labeled as such rather than presented as
+// the reviewer's own words). Nothing here is invented: no name, quote, or
+// star rating was written by us.
 //
-// To populate: replace the empty array with real reviews (get written
-// permission from the reviewer, or pull verbatim from Google/Glovo with a
-// link back to the original). Each entry needs: author name, rating (1-5),
-// the review text, and ideally a date + source link.
-//
-// Until this is filled in, /avis renders a "voir nos avis sur Google" CTA
-// instead of a testimonial grid — see src/pages/avis.astro.
+// To add more: open the listing, expand a review, copy the text verbatim,
+// and add an entry below with the same shape. Never paraphrase or invent —
+// if a review can't be copied exactly, leave it out.
 
 export interface Testimonial {
   author: string;
   rating: 1 | 2 | 3 | 4 | 5;
   text: Record<'fr' | 'en' | 'ar', string>;
-  date?: string; // ISO date
+  date?: string; // human-readable relative date as shown by Google (exact ISO date not available)
   source?: string; // e.g. 'Google', 'Glovo'
   sourceUrl?: string;
 }
 
 export const testimonials: Testimonial[] = [
-  // TODO client: add real reviews here (quotes are still never invented —
-  // the aggregate rating below is shown instead, since the client
-  // confirmed it and it links straight to the real Google listing).
+  {
+    author: 'Mehdi Semlali',
+    rating: 5,
+    text: {
+      fr: 'Lekker cheese savoyard top',
+      en: 'Lekker cheese savoyard top',
+      ar: 'Lekker cheese savoyard top',
+    },
+    date: 'il y a environ un mois',
+    source: 'Google',
+  },
+  {
+    author: 'khalil laazari',
+    rating: 5,
+    text: {
+      fr: 'Tasty burgers',
+      en: 'Tasty burgers',
+      ar: 'Tasty burgers',
+    },
+    date: 'il y a environ 3 semaines',
+    source: 'Google',
+  },
+  {
+    author: 'Рафаэль Камалеев',
+    rating: 5,
+    text: {
+      fr: 'Geweldige plek met absoluut fantastische hamburgers! De kok leek de eigenaar te zijn en was supervriendelijk.',
+      en: 'Geweldige plek met absoluut fantastische hamburgers! De kok leek de eigenaar te zijn en was supervriendelijk.',
+      ar: 'Geweldige plek met absoluut fantastische hamburgers! De kok leek de eigenaar te zijn en was supervriendelijk.',
+    },
+    date: 'il y a environ un mois',
+    source: 'Google · avis original en anglais, traduit automatiquement par Google',
+  },
+  // TODO client: add more real reviews here the same way — copy verbatim,
+  // never paraphrase.
 ];
 
 // Client's Google Business profile — used for the "see all our reviews" CTA
@@ -34,12 +65,11 @@ export const testimonials: Testimonial[] = [
 export const googleReviewsUrl =
   'https://www.google.com/search?q=smash+n+cheese+rabat';
 
-// Aggregate rating as confirmed by the client from their Google Business
-// profile. No review COUNT is shown/embedded in structured data anywhere
-// on the site — the client gave us the star rating but not an exact review
-// count, and that number is never invented. If you get the real count,
-// add `reviewCount` here and it can go into schema.org AggregateRating.
+// Aggregate rating + review count as shown live on the client's Google
+// Business profile (checked 2026-08-28). Both numbers are real, not
+// estimated — safe to use in schema.org AggregateRating.
 export const googleRating = {
   value: 4.9,
   bestRating: 5,
+  reviewCount: 170,
 };

@@ -3,6 +3,7 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import WhatsAppFloatButton from '../components/WhatsAppFloatButton.astro';
 import { identity, contact, hours } from '../config/site.config';
+import { googleRating } from '../content/testimonials';
 import { locales } from '../config/site.config';
 import { localePath, t, type PageKey } from '../lib/i18n';
 import type { Locale } from '../config/site.config';
@@ -29,6 +30,12 @@ const jsonLd = {
   telephone: contact.phone,
   servesCuisine: 'Burgers',
   priceRange: '$$',
+  aggregateRating: {
+    '@type': 'AggregateRating',
+    ratingValue: googleRating.value,
+    bestRating: googleRating.bestRating,
+    reviewCount: googleRating.reviewCount,
+  },
   address: {
     '@type': 'PostalAddress',
     streetAddress: contact.address.street,
