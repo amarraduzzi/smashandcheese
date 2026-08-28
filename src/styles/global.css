@@ -26,12 +26,21 @@
 
 html {
   scroll-behavior: smooth;
+  /* Safety net: nothing on the page should ever be able to force a
+     horizontal scrollbar (a badge, an untruncated CTA, a decorative
+     shape positioned slightly off-canvas). Without this, one overflowing
+     element makes the whole page pannable left/right on mobile, which
+     reads as "the image moves" even though only the layout is at fault. */
+  overflow-x: hidden;
+  width: 100%;
 }
 
 body {
   background-color: var(--color-background);
   color: var(--color-text-primary);
   font-family: var(--font-body);
+  overflow-x: hidden;
+  width: 100%;
 }
 
 h1, h2, h3, h4, .font-display {
@@ -62,4 +71,46 @@ h1, h2, h3, h4, .font-display {
 .skip-link:focus {
   left: 0.5rem;
   top: 0.5rem;
+}
+
+/* Cartoon decoration shapes (hero + reused elsewhere). Pure CSS, no JS,
+   so they cost nothing on pages that don't need motion and never block
+   layout — each shape is pointer-events-none and absolutely positioned
+   by its parent. Respects reduced-motion. */
+.deco-shape {
+  pointer-events: none;
+  position: absolute;
+}
+
+@keyframes deco-float {
+  0%, 100% { transform: translateY(0) rotate(var(--deco-rot, 0deg)); }
+  50% { transform: translateY(-10px) rotate(var(--deco-rot, 0deg)); }
+}
+
+@keyframes deco-spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes deco-pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.12); opacity: 0.85; }
+}
+
+.deco-float {
+  animation: deco-float 4.5s ease-in-out infinite;
+}
+.deco-spin-slow {
+  animation: deco-spin-slow 14s linear infinite;
+}
+.deco-pulse {
+  animation: deco-pulse 2.6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .deco-float,
+  .deco-spin-slow,
+  .deco-pulse {
+    animation: none;
+  }
 }

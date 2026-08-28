@@ -1,0 +1,45 @@
+---
+// Cartoon decorative flourishes for the hero. Pure inline SVG, no images to
+// load, colored with the site's own CSS vars so a palette swap (see
+// global.css) carries these along automatically. Everything here is
+// `deco-shape` (pointer-events-none, absolutely positioned) so it can never
+// intercept a tap or push layout — safe to drop into any `relative`
+// container. Shapes are anchored to the section's own corners (never to a
+// line of text), so they stay put regardless of how long the heading or
+// paragraph runs in each locale. Some thin out on mobile to keep the small
+// screen calm rather than busy.
+---
+
+<div class="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+  <!-- four-point sparkle, top-left of the section -->
+  <svg
+    class="deco-shape deco-float w-8 h-8 sm:w-10 sm:h-10 top-6 start-2 sm:start-6 text-accent"
+    style="--deco-rot: -8deg;"
+    viewBox="0 0 24 24"
+    fill="currentColor"
+  >
+    <path d="M12 0c.6 4.8 1.6 7.8 3 9.5S18.7 11.4 24 12c-4.8.6-7.8 1.6-9.5 3S12.6 18.7 12 24c-.6-4.8-1.6-7.8-3-9.5S5.3 12.6 0 12c4.8-.6 7.8-1.6 9.5-3S11.4 5.3 12 0Z" />
+  </svg>
+
+  <!-- second, smaller sparkle low on the text column, desktop only
+       (avoids sitting on top of wrapped CTA buttons on narrow phones) -->
+  <svg
+    class="deco-shape deco-pulse w-6 h-6 bottom-6 start-[22%] text-primary hidden sm:block"
+    viewBox="0 0 24 24"
+    fill="currentColor"
+  >
+    <path d="M12 0c.6 4.8 1.6 7.8 3 9.5S18.7 11.4 24 12c-4.8.6-7.8 1.6-9.5 3S12.6 18.7 12 24c-.6-4.8-1.6-7.8-3-9.5S5.3 12.6 0 12c4.8-.6 7.8-1.6 9.5-3S11.4 5.3 12 0Z" />
+  </svg>
+
+  <!-- playful squiggle underline in the bottom-left corner of the section -->
+  <svg
+    class="deco-shape w-24 sm:w-32 h-4 bottom-4 start-2 sm:start-6 text-accent hidden md:block"
+    viewBox="0 0 140 16"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="5"
+    stroke-linecap="round"
+  >
+    <path d="M3 11c8-10 16-10 24 0s16 10 24 0 16-10 24 0 16 10 24 0 16-10 24 0" />
+  </svg>
+</div>
