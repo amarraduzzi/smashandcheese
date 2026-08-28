@@ -1,0 +1,5 @@
+<!-- PLACEHOLDER LOGO — replace with the client's real logo before launch -->
+<svg xmlns="http://www.w3.org/2000/svg" width="240" height="60" viewBox="0 0 240 60">
+  <rect width="240" height="60" rx="8" fill="#fff9f2"/>
+  <text x="12" y="38" font-family="Georgia, serif" font-size="26" font-weight="700" fill="#e0361f">Smash'N Cheese</text>
+</svg>
