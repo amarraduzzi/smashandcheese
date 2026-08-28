@@ -1,0 +1,60 @@
+---
+import { identity, contact, hours, social, delivery } from '../config/site.config';
+import { localePath, t } from '../lib/i18n';
+import type { Locale } from '../config/site.config';
+
+export interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const yearsHours = hours[locale] ?? hours.fr;
+---
+
+<footer class="bg-text-primary text-white mt-24">
+  <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-12 grid gap-10 sm:grid-cols-3">
+    <div>
+      <p class="font-display text-lg font-bold text-white">{identity.name}</p>
+      <p class="mt-3 text-sm text-white/70 max-w-xs">{identity.tagline[locale]}</p>
+      {(social.instagram || social.facebook) && (
+        <div class="mt-4 flex gap-3 text-sm">
+          {social.instagram && <a href={social.instagram} class="text-white/70 hover:text-white">Instagram</a>}
+          {social.facebook && <a href={social.facebook} class="text-white/70 hover:text-white">Facebook</a>}
+        </div>
+      )}
+    </div>
+
+    <div>
+      <p class="text-sm font-semibold text-white/90">{t(locale, 'address_title')}</p>
+      <p class="mt-2 text-sm text-white/70">{contact.address.full}</p>
+      <a href={`tel:${contact.phone}`} class="mt-2 inline-block text-sm text-white/70 hover:text-white">
+        {contact.phoneDisplay}
+      </a>
+      <br />
+      <a href={delivery.glovoUrl} target="_blank" rel="noopener noreferrer" class="mt-1 inline-block text-sm text-white/70 hover:text-white">
+        {t(locale, 'cta_glovo')}
+      </a>
+    </div>
+
+    <div>
+      <p class="text-sm font-semibold text-white/90">{t(locale, 'hours_title')}</p>
+      <ul class="mt-2 space-y-1 text-sm text-white/70">
+        {yearsHours.map((h) => (
+          <li class="flex justify-between gap-4">
+            <span>{h.days}</span>
+            <span>{h.hours}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+
+  <div class="border-t border-white/10">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-white/50">
+      <p>&copy; {new Date().getFullYear()} {identity.name}. {t(locale, 'footer_rights')}</p>
+      <nav class="flex gap-4">
+        <a href={localePath(locale, 'faq')} class="hover:text-white/80">{t(locale, 'nav_faq')}</a>
+        <a href={localePath(locale, 'contact')} class="hover:text-white/80">{t(locale, 'nav_contact')}</a>
+      </nav>
+    </div>
+  </div>
+</footer>

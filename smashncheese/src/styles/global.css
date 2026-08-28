@@ -1,0 +1,65 @@
+/*
+  Smash'N Cheese — design tokens
+  Palette matches the live site's fast-casual burger branding: warm red/orange
+  primary (fire, smash-grill heat), near-black surface for contrast, cream
+  background. Swap these CSS vars per-client if this boilerplate is reused —
+  everything downstream (Tailwind theme, components) reads from here only.
+*/
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-primary: #e0361f;      /* smash-red — CTAs, accents, headlines */
+  --color-primary-dark: #b8280f; /* hover/active state */
+  --color-accent: #f4a300;       /* melted-cheese amber — highlights, badges */
+  --color-background: #fff9f2;   /* warm cream page background */
+  --color-surface: #ffffff;      /* cards */
+  --color-surface-muted: #fef1e4;/* alternating section background */
+  --color-text-primary: #201512; /* near-black, warm undertone */
+  --color-text-muted: #6b5b54;
+  --color-border: #ecdfd4;
+
+  --font-display: 'Fraunces', 'Georgia', serif;
+  --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-text-primary);
+  font-family: var(--font-body);
+}
+
+h1, h2, h3, h4, .font-display {
+  font-family: var(--font-display);
+}
+
+[dir='rtl'] {
+  direction: rtl;
+}
+
+/* WhatsApp floating action button */
+.wa-float {
+  position: fixed;
+  inset-inline-end: 1.25rem;
+  bottom: 1.25rem;
+  z-index: 50;
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  background: var(--color-primary);
+  color: #fff;
+  padding: 0.75rem 1.25rem;
+  z-index: 100;
+}
+.skip-link:focus {
+  left: 0.5rem;
+  top: 0.5rem;
+}
