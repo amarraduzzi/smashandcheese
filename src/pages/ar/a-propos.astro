@@ -1,6 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import { localePath, t } from '../../lib/i18n';
+import HeroDecor from '../../components/decor/HeroDecor.astro';
 
 const locale = 'ar' as const;
 ---
@@ -11,13 +12,26 @@ const locale = 'ar' as const;
   title="من نحن — Smash'N Cheese | الرباط"
   description="Smash'N Cheese هي تقنية سماش برغر: لحم بقري طازج يُسحق على صاج ساخن، خبز وبطاطا وحلويات محضّرة يومياً في أكدال، الرباط."
 >
-  <section class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 py-16">
-    <img src="/images/mascots/chef-illustration.png" alt="" class="mx-auto w-32 h-32 object-contain" loading="lazy" />
+  <section class="relative overflow-hidden mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 py-16">
+    <HeroDecor />
+    <img
+      src="/images/mascots/chef-illustration.png"
+      alt=""
+      class="deco-bounce-float mx-auto w-32 h-32 object-contain"
+      style="--deco-rot: -4deg;"
+      loading="eager"
+    />
     <h1 class="mt-2 font-display text-4xl sm:text-5xl font-bold text-center">من نحن</h1>
 
     <div class="mt-10 space-y-6 text-lg text-text-muted leading-relaxed">
       <p class="flex flex-col sm:flex-row items-center gap-6">
-        <img src="/images/mascots/sizzling-patty.png" alt="" class="w-28 h-28 object-contain shrink-0" loading="lazy" />
+        <img
+          src="/images/mascots/sizzling-patty.png"
+          alt=""
+          class="deco-float w-28 h-28 object-contain shrink-0"
+          style="--deco-rot: 6deg;"
+          loading="lazy"
+        />
         <span>
           في Smash'N Cheese، كل شيء يبدأ بنفس الحركة: كرة من اللحم البقري الطازج، تُسحق على صاج ساخن جداً.
           الحرارة الشديدة تُكرمل السطح فوراً بينما يبقى الداخل طرياً وعصارياً — هذه هي التقنية التي تمنح
@@ -34,7 +48,13 @@ const locale = 'ar' as const;
       </p>
     </div>
 
-    <div class="mt-12 grid gap-6 sm:grid-cols-3">
+    <div
+      class="mt-12 h-2 w-full"
+      style="background-image:url(/images/mascots/checkered-strip.png); background-repeat:repeat-x; background-size:auto 100%;"
+      aria-hidden="true"
+    ></div>
+
+    <div class="mt-8 grid gap-6 sm:grid-cols-3">
       {[
         ['🔥', 'يُسحق لحظة الطلب', 'كل برغر يُحضّر عند الطلب، أبداً مسبقاً.'],
         ['🏠', '100% محضّر يدوياً', 'خبز وبطاطا وحلويات محضّرة في المطعم كل يوم.'],
@@ -48,7 +68,14 @@ const locale = 'ar' as const;
       ))}
     </div>
 
-    <div class="mt-14 text-center">
+    <div class="relative mt-14 text-center">
+      <img
+        src="/images/mascots/paper-bag.png"
+        alt=""
+        class="deco-float hidden sm:block absolute -top-6 start-6 w-16 opacity-90 select-none"
+        style="--deco-rot: -8deg; animation-delay: 0.4s;"
+        loading="lazy"
+      />
       <a href={localePath(locale, 'menu')} class="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-white hover:bg-primary-dark transition-colors">
         {t(locale, 'cta_see_menu')}
       </a>

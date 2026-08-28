@@ -2,6 +2,7 @@
 import Layout from '../../layouts/Layout.astro';
 import { testimonialsByLocale, googleReviewsUrl, googleRating } from '../../content/testimonials';
 import { t } from '../../lib/i18n';
+import HeroDecor from '../../components/decor/HeroDecor.astro';
 
 const locale = 'en' as const;
 const testimonials = testimonialsByLocale[locale];
@@ -37,10 +38,18 @@ const reviewJsonLd = {
 >
   <script type="application/ld+json" set:html={JSON.stringify(reviewJsonLd)} />
 
-  <section class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-16">
+  <section class="relative overflow-hidden mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-16">
+    <HeroDecor />
+    <img
+      src="/images/mascots/badge-fait-maison.png"
+      alt=""
+      class="deco-bounce-float absolute -top-2 end-2 sm:end-10 w-20 sm:w-28 drop-shadow-lg select-none z-10"
+      style="--deco-rot: 8deg;"
+      loading="eager"
+    />
     <h1 class="font-display text-4xl sm:text-5xl font-bold text-center">Customer reviews</h1>
 
-    <div class="mt-8 mx-auto max-w-md rounded-3xl border border-border bg-surface p-8 text-center shadow-sm">
+    <div class="deco-bounce-in mt-8 mx-auto max-w-md rounded-3xl border border-border bg-surface p-8 text-center shadow-sm">
       <p class="font-display text-5xl font-bold text-primary">{googleRating.value.toFixed(1)}<span class="text-2xl text-text-muted">/{googleRating.bestRating}</span></p>
       <div class="mt-3 flex items-center justify-center gap-1 text-accent" aria-hidden="true">
         {Array.from({ length: Math.round(googleRating.value) }).map(() => (

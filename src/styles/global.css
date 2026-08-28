@@ -59,18 +59,25 @@ h1, h2, h3, h4, .font-display {
   z-index: 50;
 }
 
+/* Off-screen via transform (not a huge left/right offset) so it never
+   distorts the document's scrollable width — a `left: -9999px` version of
+   this hit an RTL-specific bug where every Arabic page's scrollWidth
+   ballooned to ~10800px (negative-offset content adds into RTL's mirrored
+   scroll extent), silently letting the whole page pan sideways on mobile. */
 .skip-link {
   position: absolute;
-  left: -9999px;
   top: 0;
+  inset-inline-start: 0.5rem;
+  transform: translateY(-150%);
   background: var(--color-primary);
   color: #fff;
   padding: 0.75rem 1.25rem;
   z-index: 100;
+  border-radius: 0 0 0.5rem 0.5rem;
+  transition: transform 0.15s ease;
 }
 .skip-link:focus {
-  left: 0.5rem;
-  top: 0.5rem;
+  transform: translateY(0);
 }
 
 /* Cartoon decoration shapes (hero + reused elsewhere). Pure CSS, no JS,
