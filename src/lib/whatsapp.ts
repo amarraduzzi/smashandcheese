@@ -1,23 +1,16 @@
-import { whatsapp } from '../config/site.config';
+import { localePath } from './i18n';
 import type { Locale } from '../config/site.config';
 
 /**
- * Builds a WhatsApp deep link. If `whatsapp.orderUrl` is configured (i.e. the
- * dedicated order-engine site is live), every call returns that URL instead —
- * flip that one config value and the whole site's order CTAs repoint there
- * with zero further code changes.
+ * Where every "Commander via WhatsApp" CTA on the site points.
+ *
+ * The actual ordering flow (add items to a cart, then send the order to
+ * WhatsApp) is built INTO the site on /menu — see src/order/OrderApp.tsx,
+ * mounted there as a client-side island — rather than living on a separate
+ * site/app. So every CTA site-wide just routes to the localized /menu page;
+ * the cart there is what builds the real wa.me deep link once someone
+ * actually checks out (see src/order/components/checkout/generateWhatsAppMessage.ts).
  */
-export function getWhatsAppOrderLink(locale: Locale, itemLabel?: string): string {
-  if (whatsapp.orderUrl) return whatsapp.orderUrl;
-
-  const base = whatsapp.defaultMessage[locale] ?? whatsapp.defaultMessage.fr;
-  const message = itemLabel
-    ? {
-        fr: `Bonjour Smash'N Cheese 👋 Je voudrais commander : ${itemLabel}.`,
-        en: `Hello Smash'N Cheese 👋 I'd like to order: ${itemLabel}.`,
-        ar: `مرحباً Smash'N Cheese 👋 أرغب في طلب: ${itemLabel}.`,
-      }[locale]
-    : base;
-
-  return `https://wa.me/${whatsapp.number}?text=${encodeURIComponent(message)}`;
+export function getWhatsAppOrderLink(locale: Locale): string {
+  return localePath(locale, 'menu');
 }

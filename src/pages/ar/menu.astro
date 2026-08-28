@@ -1,37 +1,48 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import MenuSection from '../../components/MenuSection.astro';
-import { menu } from '../../content/menu-highlights';
+import OrderApp from '../../order/OrderApp';
+import { categories, menuItems } from '../../order/data/menu';
+import { identity } from '../../config/site.config';
 
 const locale = 'ar' as const;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Restaurant',
+  name: identity.name,
+  hasMenu: {
+    '@type': 'Menu',
+    hasMenuSection: categories.map((category) => ({
+      '@type': 'MenuSection',
+      name: category.label.ar,
+      hasMenuItem: menuItems
+        .filter((item) => item.categoryId === category.id)
+        .map((item) => ({
+          '@type': 'MenuItem',
+          name: item.name.ar,
+          description: item.description?.ar,
+          offers: { '@type': 'Offer', price: item.priceMAD, priceCurrency: 'MAD' },
+        })),
+    })),
+  },
+};
 ---
 
 <Layout
   locale={locale}
   page="menu"
   title="القائمة — Smash'N Cheese | برغر وساندويتش وحلويات في الرباط"
-  description="اكتشفوا القائمة الكاملة لـ Smash'N Cheese: برغر سماش، تشيز ستيك، سلطات، بطاطا محضّرة يدوياً، حلويات ومشروبات. اطلبوا عبر واتساب."
+  description="اكتشفوا القائمة الكاملة لـ Smash'N Cheese. أضيفوا الأصناف إلى السلة، وستُرسل طلبكم مباشرة عبر واتساب."
 >
-  <section class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-16">
-    <div class="text-center">
-      <h1 class="font-display text-4xl sm:text-5xl font-bold">قائمتنا</h1>
-      <p class="mt-4 text-text-muted">
-        كل طبق يبدأ بكرة من اللحم البقري الطازج، تُسحق لحظة الطلب. اضغطوا على أي صنف لطلبه مباشرة عبر واتساب.
-      </p>
-    </div>
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 
-    <nav class="mt-10 flex flex-wrap justify-center gap-2" aria-label="فئات القائمة">
-      {menu.map((category) => (
-        <a href={`#${category.id}`} class="rounded-full border border-border px-4 py-1.5 text-sm font-medium text-text-muted hover:border-primary hover:text-primary transition-colors">
-          {category.label.ar}
-        </a>
-      ))}
-    </nav>
-
-    <div class="mt-14 space-y-14">
-      {menu.map((category) => (
-        <MenuSection locale={locale} category={category} />
-      ))}
-    </div>
+  <section class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 pt-16 pb-6 text-center">
+    <h1 class="font-display text-4xl sm:text-5xl font-bold">قائمتنا</h1>
+    <p class="mt-4 text-text-muted">
+      كل طبق يبدأ بكرة من اللحم البقري الطازج، تُسحق لحظة الطلب. أضيفوا الأصناف إلى السلة أدناه —
+      وسيصل طلبكم مباشرة عبر واتساب.
+    </p>
   </section>
+
+  <OrderApp language="ar" client:load />
 </Layout>

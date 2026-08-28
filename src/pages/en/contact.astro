@@ -46,7 +46,7 @@ const locale = 'en' as const;
         </div>
 
         <div class="flex flex-wrap gap-4 pt-2">
-          <a href={getWhatsAppOrderLink(locale)} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-white hover:bg-primary-dark transition-colors">
+          <a href={getWhatsAppOrderLink(locale)} class="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-white hover:bg-primary-dark transition-colors">
             {t(locale, 'cta_order_whatsapp')}
           </a>
           <a href={delivery.glovoUrl} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 rounded-full border border-border px-6 py-3 text-sm font-semibold hover:border-primary hover:text-primary transition-colors">

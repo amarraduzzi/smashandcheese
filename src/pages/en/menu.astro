@@ -1,38 +1,48 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import MenuSection from '../../components/MenuSection.astro';
-import { menu } from '../../content/menu-highlights';
+import OrderApp from '../../order/OrderApp';
+import { categories, menuItems } from '../../order/data/menu';
+import { identity } from '../../config/site.config';
 
 const locale = 'en' as const;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Restaurant',
+  name: identity.name,
+  hasMenu: {
+    '@type': 'Menu',
+    hasMenuSection: categories.map((category) => ({
+      '@type': 'MenuSection',
+      name: category.label.en,
+      hasMenuItem: menuItems
+        .filter((item) => item.categoryId === category.id)
+        .map((item) => ({
+          '@type': 'MenuItem',
+          name: item.name.en,
+          description: item.description?.en,
+          offers: { '@type': 'Offer', price: item.priceMAD, priceCurrency: 'MAD' },
+        })),
+    })),
+  },
+};
 ---
 
 <Layout
   locale={locale}
   page="menu"
   title="Menu — Smash'N Cheese | Burgers, Sandwiches, Desserts in Rabat"
-  description="See the full Smash'N Cheese menu: smash burgers, cheese steak, salads, house fries, desserts and drinks. Order via WhatsApp."
+  description="See the full Smash'N Cheese menu: smash burgers, cheese steak, salads, house fries, desserts and drinks. Build your order and send it straight to WhatsApp."
 >
-  <section class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-16">
-    <div class="text-center">
-      <h1 class="font-display text-4xl sm:text-5xl font-bold">Our menu</h1>
-      <p class="mt-4 text-text-muted">
-        Every dish starts with a ball of fresh beef, smashed to order. Tap an item to order it
-        directly via WhatsApp.
-      </p>
-    </div>
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 
-    <nav class="mt-10 flex flex-wrap justify-center gap-2" aria-label="Menu categories">
-      {menu.map((category) => (
-        <a href={`#${category.id}`} class="rounded-full border border-border px-4 py-1.5 text-sm font-medium text-text-muted hover:border-primary hover:text-primary transition-colors">
-          {category.label.en}
-        </a>
-      ))}
-    </nav>
-
-    <div class="mt-14 space-y-14">
-      {menu.map((category) => (
-        <MenuSection locale={locale} category={category} />
-      ))}
-    </div>
+  <section class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 pt-16 pb-6 text-center">
+    <h1 class="font-display text-4xl sm:text-5xl font-bold">Our menu</h1>
+    <p class="mt-4 text-text-muted">
+      Every dish starts with a ball of fresh beef, smashed to order. Add items to the cart below —
+      your order goes straight to WhatsApp.
+    </p>
   </section>
+
+  <OrderApp language="en" client:load />
 </Layout>

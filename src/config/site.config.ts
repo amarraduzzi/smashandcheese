@@ -122,6 +122,7 @@ export const colors = {
   textPrimary: '#201512',
   textMuted: '#6b5b54',
   border: '#ecdfd4',
+  danger: '#c8102e', // used by the in-page order cart (remove-item, errors)
 };
 
 export type Locale = 'fr' | 'en' | 'ar';
