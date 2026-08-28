@@ -27,7 +27,15 @@ const navItems: { key: PageKey; labelKey: string }[] = [
         {identity.name}
       </a>
 
-      <nav class="hidden md:flex items-center gap-6" aria-label="Main navigation">
+      <!-- Desktop nav only shows from lg: at md (768-1023px) there isn't
+           enough header width for the logo + 6 nav links + language pills +
+           full "Commander maintenant" button all in one row without
+           overflowing — it was overflowing invisibly (clipped by the
+           overflow-x:hidden safety net on body, same failure mode as the
+           earlier mobile bug) rather than wrapping or scrolling. So the
+           hamburger now covers md too; below lg it's logo + lang + CTA +
+           hamburger, which does fit. -->
+      <nav class="hidden lg:flex items-center gap-4 xl:gap-6" aria-label="Main navigation">
         {navItems.map((item) => {
           const href = localePath(locale, item.key);
           const isActive = item.key === page;
@@ -46,7 +54,7 @@ const navItems: { key: PageKey; labelKey: string }[] = [
         })}
       </nav>
 
-      <div class="flex items-center gap-2 sm:gap-3 shrink-0">
+      <div class="flex items-center gap-2 sm:gap-3 lg:gap-2 xl:gap-3 shrink-0">
         <div class="hidden sm:flex items-center gap-1 text-xs">
           {locales.map((l) => (
             <a
@@ -138,7 +146,7 @@ const navItems: { key: PageKey; labelKey: string }[] = [
              positioned against the header's own relative wrapper (not
              against <details>, which only sizes to its summary button),
              so it spans the full header width correctly. -->
-        <details class="md:hidden group">
+        <details class="lg:hidden group">
           <summary
             class="list-none [&::-webkit-details-marker]:hidden marker:hidden cursor-pointer inline-flex items-center justify-center w-10 h-10 rounded-full text-text-primary hover:bg-surface-muted transition-colors"
             aria-label={t(locale, 'nav_menu_toggle')}

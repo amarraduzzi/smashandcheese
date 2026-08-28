@@ -22,7 +22,7 @@ const highlights = menu.filter((c) => c.id === 'burgers');
     <HeroDecor />
     <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-16 sm:py-24 grid gap-12 lg:grid-cols-2 items-center">
       <div>
-        <div class="flex flex-wrap items-center gap-3">
+        <div class="deco-bounce-in flex flex-wrap items-center gap-3">
           <p class="inline-flex items-center gap-2 rounded-full bg-white px-4 py-1.5 text-sm font-semibold text-primary shadow-sm">
             🔥 100% لحم بقري، يُسحق لحظة الطلب
           </p>
@@ -54,6 +54,13 @@ const highlights = menu.filter((c) => c.id === 'burgers');
           class="w-full rounded-3xl object-cover shadow-lg aspect-[4/3]"
           loading="eager"
           fetchpriority="high"
+        />
+        <img
+          src="/images/mascots/hero-exploding-burger.png"
+          alt=""
+          class="deco-bounce-float absolute -top-10 -end-8 sm:-top-14 sm:-end-12 w-28 sm:w-36 lg:w-44 drop-shadow-xl select-none z-10"
+          style="--deco-rot: 8deg;"
+          loading="eager"
         />
       </div>
     </div>
