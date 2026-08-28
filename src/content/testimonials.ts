@@ -24,10 +24,22 @@ export interface Testimonial {
 }
 
 export const testimonials: Testimonial[] = [
-  // TODO client: add real reviews here.
+  // TODO client: add real reviews here (quotes are still never invented —
+  // the aggregate rating below is shown instead, since the client
+  // confirmed it and it links straight to the real Google listing).
 ];
 
 // Client's Google Business profile — used for the "see all our reviews" CTA
-// and as the review-collection destination. Confirm/replace this URL.
+// and as the review-collection destination.
 export const googleReviewsUrl =
-  'https://www.google.com/maps/search/?api=1&query=Smash%27N+Cheese+Rabat';
+  'https://www.google.com/search?q=smash+n+cheese+rabat';
+
+// Aggregate rating as confirmed by the client from their Google Business
+// profile. No review COUNT is shown/embedded in structured data anywhere
+// on the site — the client gave us the star rating but not an exact review
+// count, and that number is never invented. If you get the real count,
+// add `reviewCount` here and it can go into schema.org AggregateRating.
+export const googleRating = {
+  value: 4.9,
+  bestRating: 5,
+};

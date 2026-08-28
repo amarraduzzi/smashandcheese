@@ -22,7 +22,7 @@ const navItems: { key: PageKey; labelKey: string }[] = [
 ---
 
 <header class="sticky top-0 z-40 bg-surface/95 backdrop-blur border-b border-border">
-  <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+  <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 relative">
     <div class="flex h-16 items-center justify-between gap-4">
       <a href={localePath(locale, 'home')} class="flex items-center gap-2 font-display text-xl font-bold text-primary shrink-0">
         {identity.name}
@@ -88,26 +88,71 @@ const navItems: { key: PageKey; labelKey: string }[] = [
             <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.29-1.39a9.9 9.9 0 0 0 4.75 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C22 6.45 17.5 2 12.04 2Zm0 18.08a8.2 8.2 0 0 1-4.17-1.14l-.3-.18-3.14.82.84-3.06-.2-.31a8.2 8.2 0 0 1-1.26-4.4c0-4.55 3.7-8.24 8.24-8.24 4.55 0 8.24 3.7 8.24 8.24 0 4.55-3.7 8.27-8.25 8.27Zm4.52-6.16c-.25-.12-1.47-.72-1.7-.81-.23-.08-.39-.12-.56.13-.17.25-.64.81-.78.97-.14.17-.29.19-.53.06-.25-.12-1.05-.39-2-1.23-.74-.66-1.24-1.47-1.38-1.72-.15-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.12-.15.16-.25.24-.42.08-.17.04-.31-.02-.43-.06-.12-.56-1.36-.77-1.86-.2-.49-.41-.42-.56-.43h-.48c-.17 0-.44.06-.67.31-.23.25-.87.85-.87 2.08 0 1.23.89 2.41 1.02 2.58.12.17 1.75 2.68 4.25 3.75.59.26 1.06.41 1.42.53.6.19 1.14.16 1.57.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.08.15-1.18-.06-.1-.23-.16-.48-.28Z"/>
           </svg>
         </a>
+
+        <!-- Mobile nav: a native <details> disclosure instead of the old
+             horizontal-scroll link row — that row hid most of the nav
+             behind a swipe with no visual hint. `group-open:` lets the
+             hamburger/close icon swap regardless of DOM nesting, and the
+             browser handles open/close natively (works with JS disabled,
+             keyboard-accessible out of the box). The panel itself is
+             positioned against the header's own relative wrapper (not
+             against <details>, which only sizes to its summary button),
+             so it spans the full header width correctly. -->
+        <details class="md:hidden group">
+          <summary
+            class="list-none [&::-webkit-details-marker]:hidden marker:hidden cursor-pointer inline-flex items-center justify-center w-10 h-10 rounded-full text-text-primary hover:bg-surface-muted transition-colors"
+            aria-label={t(locale, 'nav_menu_toggle')}
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="w-6 h-6 group-open:hidden" aria-hidden="true">
+              <path d="M4 7h16M4 12h16M4 17h16" />
+            </svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="w-6 h-6 hidden group-open:block" aria-hidden="true">
+              <path d="M6 6l12 12M18 6L6 18" />
+            </svg>
+          </summary>
+
+          <nav
+            class="absolute inset-x-4 top-full mt-2 rounded-2xl border border-border bg-surface shadow-lg p-4 flex flex-col gap-1 z-50"
+            aria-label="Main navigation mobile"
+          >
+            {navItems.map((item) => {
+              const href = localePath(locale, item.key);
+              const isActive = item.key === page;
+              return (
+                <a
+                  href={href}
+                  class:list={[
+                    'rounded-lg px-3 py-2.5 text-sm font-semibold transition-colors hover:bg-surface-muted',
+                    isActive ? 'text-primary' : 'text-text-primary',
+                  ]}
+                  aria-current={isActive ? 'page' : undefined}
+                >
+                  {t(locale, item.labelKey)}
+                </a>
+              );
+            })}
+            <div class="mt-2 flex items-center justify-between gap-3 border-t border-border pt-3">
+              <div class="flex items-center gap-1 text-xs">
+                {locales.map((l) => (
+                  <a
+                    href={localePath(l, page)}
+                    class:list={[
+                      'px-2 py-1 rounded uppercase tracking-wide',
+                      l === locale ? 'bg-primary text-white' : 'text-text-muted hover:bg-surface-muted',
+                    ]}
+                    aria-current={l === locale ? 'true' : undefined}
+                  >
+                    {l}
+                  </a>
+                ))}
+              </div>
+              <a href={`tel:${contact.phone}`} class="text-sm font-semibold text-text-primary hover:text-primary">
+                {contact.phoneDisplay}
+              </a>
+            </div>
+          </nav>
+        </details>
       </div>
     </div>
-
-    <nav class="md:hidden flex items-center gap-4 overflow-x-auto pb-3 -mt-1" aria-label="Main navigation mobile">
-      {navItems.map((item) => {
-        const href = localePath(locale, item.key);
-        const isActive = item.key === page;
-        return (
-          <a
-            href={href}
-            class:list={[
-              'text-sm font-medium whitespace-nowrap transition-colors hover:text-primary',
-              isActive ? 'text-primary' : 'text-text-muted',
-            ]}
-            aria-current={isActive ? 'page' : undefined}
-          >
-            {t(locale, item.labelKey)}
-          </a>
-        );
-      })}
-    </nav>
   </div>
 </header>

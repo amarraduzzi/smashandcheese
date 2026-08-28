@@ -11,6 +11,13 @@ const yearsHours = hours[locale] ?? hours.fr;
 ---
 
 <footer class="bg-text-primary text-white mt-24">
+  <!-- Diner-style checkered strip, tiled from the brand's own illustration set
+       rather than stretched, so the squares stay crisp at any viewport width. -->
+  <div
+    class="h-3 w-full"
+    style="background-image:url(/images/mascots/checkered-strip.png); background-repeat:repeat-x; background-size:auto 100%;"
+    aria-hidden="true"
+  ></div>
   <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-12 grid gap-10 sm:grid-cols-3">
     <div>
       <p class="font-display text-lg font-bold text-white">{identity.name}</p>
