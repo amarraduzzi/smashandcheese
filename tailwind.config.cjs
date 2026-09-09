@@ -17,6 +17,7 @@ module.exports = {
       fontFamily: {
         display: 'var(--font-display)',
         body: 'var(--font-body)',
+        accent: 'var(--font-accent)', // Lora — short taglines/quotes only, per charte
       },
     },
   },

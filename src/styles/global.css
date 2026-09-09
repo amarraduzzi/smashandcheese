@@ -1,8 +1,10 @@
 /*
   Smash'N Cheese — design tokens
-  Palette matches the live site's fast-casual burger branding: warm red/orange
-  primary (fire, smash-grill heat), near-black surface for contrast, cream
-  background. Swap these CSS vars per-client if this boilerplate is reused —
+  Palette and type per the client's official Charte Graphique (Vol. 01,
+  2026): Bordeaux Smash as couleur d'accent (CTAs, headline emphasis),
+  Jaune Mielleux as couleur signature (badges, highlights), on a Crème
+  Doux background — the charte's 60% crème / 30% jaune / 10% bordeaux
+  rule. Swap these CSS vars per-client if this boilerplate is reused —
   everything downstream (Tailwind theme, components) reads from here only.
 */
 @tailwind base;
@@ -10,18 +12,23 @@
 @tailwind utilities;
 
 :root {
-  --color-primary: #e0361f;      /* smash-red — CTAs, accents, headlines */
-  --color-primary-dark: #b8280f; /* hover/active state */
-  --color-accent: #f4a300;       /* melted-cheese amber — highlights, badges */
-  --color-background: #fff9f2;   /* warm cream page background */
-  --color-surface: #ffffff;      /* cards */
-  --color-surface-muted: #fef1e4;/* alternating section background */
-  --color-text-primary: #201512; /* near-black, warm undertone */
-  --color-text-muted: #6b5b54;
-  --color-border: #ecdfd4;
+  --color-primary: #A52639;      /* Bordeaux Smash — CTAs, accents, headlines */
+  --color-primary-dark: #5C0E1B; /* Bordeaux Profond — hover/active state */
+  --color-accent: #F5A623;       /* Jaune Mielleux — highlights, badges */
+  --color-background: #FBF6EE;   /* Crème Doux page background */
+  --color-surface: #ffffff;      /* cards — also the only background the logo may sit on */
+  --color-surface-muted: #FBEBD3;/* Crème Doux tinted with Jaune Mielleux — alternating sections */
+  --color-text-primary: #2B1810; /* Brun Toast */
+  --color-text-muted: #6B5147;
+  --color-border: #EFE0C8;
 
-  --font-display: 'Fraunces', 'Georgia', serif;
-  --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+  /* H1/H2 per charte hierarchy */
+  --font-display: 'Playfair Display', 'Georgia', serif;
+  /* H3/body copy per charte hierarchy */
+  --font-body: 'Poppins', system-ui, -apple-system, sans-serif;
+  /* "Special — touche gourmande" per charte: short taglines/quotes only,
+     e.g. class="font-accent italic" — not for body copy or long headings */
+  --font-accent: 'Lora', 'Georgia', serif;
 }
 
 html {

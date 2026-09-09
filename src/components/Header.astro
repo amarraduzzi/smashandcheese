@@ -23,8 +23,15 @@ const navItems: { key: PageKey; labelKey: string }[] = [
 <header class="sticky top-0 z-40 bg-surface/95 backdrop-blur border-b border-border">
   <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 relative">
     <div class="flex h-16 items-center justify-between gap-4">
-      <a href={localePath(locale, 'home')} class="flex items-center gap-2 font-display text-xl font-bold text-primary shrink-0">
-        {identity.name}
+      <a href={localePath(locale, 'home')} class="flex items-center gap-2 shrink-0">
+        <img
+          src={identity.logo}
+          alt={identity.name}
+          class="h-14 w-auto"
+          width="150"
+          height="123"
+        />
+        <span class="hidden sm:inline font-display text-xl font-bold text-primary">{identity.name}</span>
       </a>
 
       <!-- Desktop nav only shows from lg: at md (768-1023px) there isn't

@@ -38,7 +38,7 @@ export const identity = {
     en: 'smash burger Rabat',
     ar: 'سماش برغر الرباط',
   },
-  logo: '/images/logo.svg', // placeholder — replace with real logo asset
+  logo: '/images/logo-badge.png', // official oval badge logo, per Charte Graphique Vol. 01 2026
 };
 
 export const contact = {
@@ -112,17 +112,21 @@ export const whatsapp = {
   },
 };
 
+// Palette per client Charte Graphique (Vol. 01, 2026) — "Bordeaux Smash" is
+// the couleur d'accent (CTAs, headline emphasis, H2/Special text per the
+// charte's typographic hierarchy); "Jaune Mielleux" is the couleur signature
+// (badges, ratings, highlights). Keep in sync with src/styles/global.css.
 export const colors = {
-  primary: '#e0361f',
-  primaryDark: '#b8280f',
-  accent: '#f4a300',
-  background: '#fff9f2',
+  primary: '#A52639', // Bordeaux Smash — couleur d'accent
+  primaryDark: '#5C0E1B', // Bordeaux Profond — hover/active state
+  accent: '#F5A623', // Jaune Mielleux — couleur signature
+  background: '#FBF6EE', // Crème Doux
   surface: '#ffffff',
-  surfaceMuted: '#fef1e4',
-  textPrimary: '#201512',
-  textMuted: '#6b5b54',
-  border: '#ecdfd4',
-  danger: '#c8102e', // used by the in-page order cart (remove-item, errors)
+  surfaceMuted: '#FBEBD3', // Crème Doux tinted with Jaune Mielleux
+  textPrimary: '#2B1810', // Brun Toast
+  textMuted: '#6B5147',
+  border: '#EFE0C8',
+  danger: '#c8102e', // used by the in-page order cart (remove-item, errors) — kept distinct from brand red so cart errors don't read as a brand accent
 };
 
 export type Locale = 'fr' | 'en' | 'ar';
